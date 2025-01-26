@@ -9,6 +9,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 PROXY = os.getenv("PROXY")
 
 # Настройка прокси
+
 proxies = {
     "http": PROXY,
     "https": PROXY,
