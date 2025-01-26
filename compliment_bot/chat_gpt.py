@@ -1,10 +1,27 @@
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+import requests
 
 load_dotenv()  # Загружает переменные из .env
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+PROXY = os.getenv("PROXY")
+
+# Настройка прокси
+proxies = {
+    "http": PROXY,
+    "https": PROXY,
+}
+
+# Переопределение метода requests.post для работы с прокси
+original_post = requests.post
+
+def proxied_post(*args, **kwargs):
+    kwargs["proxies"] = proxies
+    return original_post(*args, **kwargs)
+
+requests.post = proxied_post
 
 def generate_compliment(text: str):
     genai.configure(api_key=GEMINI_API_KEY)
