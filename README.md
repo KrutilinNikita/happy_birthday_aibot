@@ -1,4 +1,4 @@
-# Compliment Bot
+# Happy birthday AIBot
 
 Happy_birthday_aibot — Telegram-бот, который создает поздравление с днем рождения на основе информации о человеке. Использует API Gemini и поддерживает прокси.
 Вы можете взаимодействовать с ботом по ссылке: [https://t.me/happy_birthday_aibot](https://t.me/happy_birthday_aibot)
