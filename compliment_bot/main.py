@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from chat_gpt import generate_compliment
+from ai_bot import generate_text
 import telebot
 
 load_dotenv()  # Загружает переменные из .env
@@ -14,7 +14,7 @@ bot = telebot.TeleBot(TELEGRAM_TOKEN)
 def start_message(message):
     bot.send_message(
         message.chat.id,
-        "Привет! Напиши, что тебе нравится в девушке, и я помогу придумать красивый комплимент."
+        "Привет! Напиши, информацию про человека, и я помогу придумать красивое поздравление с днем рождения."
     )
 
 # Обработчик текстовых сообщений
@@ -23,7 +23,7 @@ def handle_text(message):
     user_input = message.text
     try:
         # Генерация комплимента
-        compliment = generate_compliment(user_input)
+        compliment = generate_text(user_input)
         bot.send_message(message.chat.id, compliment)
     except Exception as e:
         print(f"Ошибка: {e}")

@@ -13,7 +13,7 @@ os.environ['HTTPS_PROXY'] = PROXY
 
 # Переопределение метода requests.post для работы с прокси
 
-def generate_compliment(text: str):
+def generate_text(text: str):
     genai.configure(api_key=GEMINI_API_KEY, transport='rest')
 
     try:
