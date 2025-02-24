@@ -31,9 +31,14 @@ def start_message(message):
     response_text = None
     response_time = None
     error = None
-    log_entry = [timestamp, user_id, username, user_input, response_text, response_time, error]
-    # Вызываем функцию записи в Google Таблицу
-    append_data_to_google_sheet(data=log_entry, sheet_name="Logs_start")
+    try:
+        log_entry = [timestamp, user_id, username, user_input, response_text, response_time, error]
+        # Вызываем функцию записи в Google Таблицу
+        append_data_to_google_sheet(data=log_entry, sheet_name="Logs_start")
+    except Exception as e:
+        pass
+        print('Ошибка записи в табилцу')
+        # bot.send_message(user_id, compliment) Сообщение мне об ошибки
 
 
 # Обработчик текстовых сообщений
@@ -56,10 +61,14 @@ def handle_text(message):
         error = str(e)
         # print(f"Ошибка: {e}")
         # bot.send_message(user_id, compliment) Сообщение мне об ошибки
-
-    log_entry = [timestamp, user_id, username, user_input, response_text, response_time, error]
-    # Вызываем функцию записи в Google Таблицу
-    append_data_to_google_sheet(data=log_entry, sheet_name="Logs_data")
+    try:
+        log_entry = [timestamp, user_id, username, user_input, response_text, response_time, error]
+        # Вызываем функцию записи в Google Таблицу
+        append_data_to_google_sheet(data=log_entry, sheet_name="Logs_data")
+    except Exception as e:
+        pass
+        print('Ошибка записи в табилцу')
+        # bot.send_message(user_id, compliment) Сообщение мне об ошибки
 
 
 if __name__ == "__main__":
