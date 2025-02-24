@@ -6,13 +6,14 @@ from dotenv import load_dotenv
 load_dotenv()  # Загружает переменные из .env
 
 TABLE_URL = os.getenv("TABLE_URL")
+GOOGLE_CREDENTIALS_PATH = os.getenv("GOOGLE_CREDENTIALS_PATH")
 
 # Таблица для загрузки данных
 table_url = TABLE_URL
 
 def client_init_json() -> Client:
     """Создание клиента для работы с Google Sheets."""
-    return service_account(filename='../google_sheets_key.json')
+    return service_account(filename=GOOGLE_CREDENTIALS_PATH)
 
 
 def get_table_by_url(client: Client, table_url: str) -> Spreadsheet:
