@@ -36,14 +36,18 @@ pip install -r requirements.txt
 Создайте файл `.env` в корневой директории на основе `.env.template` и заполните его:
 
 ```
-GEMINI_API_KEY=your_gemini_api_key
-TELEGRAM_TOKEN=your_telegram_token
-PROXY=socks5h://username:password@host:port
+GEMINI_API_KEY = 'your_gemini_api_key'
+TELEGRAM_TOKEN = 'your_telegram_token'
+PROXY = "socks5h://username:password@host:port"
+TABLE_URL = 'your_table_url'
+GOOGLE_CREDENTIALS_PATH = 'your_path_for_google_credentials/google_sheets_key.json'
 ```
 
 - **`GEMINI_API_KEY`** — ключ API для доступа к Gemini.
 - **`TELEGRAM_TOKEN`** — токен бота в Telegram (получить через [BotFather](https://t.me/BotFather)).
 - **`PROXY`**  — прокси для работы бота, если он недоступен без VPN.
+- **`TABLE_URL`**  — url-адресс гугл-таблицы в которую будут писаться данные.
+- **`GOOGLE_CREDENTIALS_PATH`** — путь к файлу с доступами для гугл-сервера (подробное описание получения такого файла [ссылка]([https://t.me/BotFather](https://habr.com/ru/articles/825404/))).
 
 ### 5. Запуск бота
 
