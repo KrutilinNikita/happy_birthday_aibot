@@ -2,6 +2,10 @@ from dotenv import load_dotenv
 import os
 from ai_bot import generate_text
 import telebot
+from add_data_to_bd import append_data_to_google_sheet
+
+from datetime import datetime
+import time
 
 load_dotenv()  # Загружает переменные из .env
 
@@ -20,21 +24,43 @@ def start_message(message):
         message.chat.id,
         "Ты в любой момент можешь написать информацию про человека и я пришлю поздравление."
     )
+    user_input = 'start'
+    user_id = message.chat.id
+    username = message.from_user.username if message.from_user.username else "Unknown"
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    response_text = None
+    response_time = None
+    error = None
+    log_entry = [timestamp, user_id, username, user_input, response_text, response_time, error]
+    # Вызываем функцию записи в Google Таблицу
+    append_data_to_google_sheet(data=log_entry, sheet_name="Logs_start")
+
 
 # Обработчик текстовых сообщений
 @bot.message_handler(content_types=["text"])
 def handle_text(message):
     user_input = message.text
+    user_id = message.chat.id
+    username = message.from_user.username if message.from_user.username else "Unknown"
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     try:
-        # Генерация комплимента
-        compliment = generate_text(user_input)
-        bot.send_message(message.chat.id, compliment)
+        start_time = time.time()  # Начало измерения времени ответа
+        response_text = generate_text(user_input)
+        response_time = round(time.time() - start_time, 3)  # Время обработки
+        error = None
+        bot.send_message(user_id, response_text)
     except Exception as e:
-        print(f"Ошибка: {e}")
-        bot.send_message(
-            message.chat.id,
-            "Произошла ошибка при генерации комплимента. Попробуйте снова!"
-        )
+        response_text = "Ошибка!"
+        response_time = None
+        error = str(e)
+        # print(f"Ошибка: {e}")
+        # bot.send_message(user_id, compliment) Сообщение мне об ошибки
+
+    log_entry = [timestamp, user_id, username, user_input, response_text, response_time, error]
+    # Вызываем функцию записи в Google Таблицу
+    append_data_to_google_sheet(data=log_entry, sheet_name="Logs_data")
+
 
 if __name__ == "__main__":
     # Запуск бота
